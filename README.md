@@ -44,3 +44,16 @@
 An uber jar, including the dependencies, is necessary to submit to Spark. This uber jar is obtained this way:
 
     $mvn clean compile assembly:single
+	
+##4. Testing
+
+###4.1 kmeans 
+
+  $spark-submit --class "bsc.spark.perf.mllib.TestRunner" --master local[4] bsc.spark-1.4.1.jar kmeans -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
+
+###4.2 naive-bayes 
+
+  $spark-submit --class "bsc.spark.perf.mllib.TestRunner" --master local[4] bsc.spark-1.4.1.jar naive-bayes -num-trials 1 -inter-trial-wait 3 -num-partitions 400 -random-seed 5 -num-examples 100000 -num-features 10000 -nb-lambda 1.0 -per-negative 0.3 -scale-factor 1.0
+	  
+
+    
