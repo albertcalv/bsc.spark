@@ -12,8 +12,8 @@
         <scala.binary.version>2.10</scala.binary.version>-->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>   
-        <!--<opencv.version>2.4.9</opencv.version>-->       
-        <opencv.version>3.0.0</opencv.version>       
+        <opencv.version>2.4.9</opencv.version>       
+        <!--<opencv.version>3.0.0</opencv.version>-->       
     </properties>
     
 	
