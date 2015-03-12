@@ -82,7 +82,7 @@ In the case of OpenCV it's not enough to provide the .jar, as Spark will also ne
 			   |     |-seqfile1.hsf
 			   |     |-seqfile2.hsf 
 ```
-NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how generate sequence files of images and metadata
+NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for information on how generate sequence files of images and metadata
 
 
 ###3.3 Spark performance testing
