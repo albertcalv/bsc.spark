@@ -50,19 +50,25 @@
 	
 ##3. Testing
 
-###3.1 kmeans 
+###3.1 External jars 
+
+If you prefer to decouple the application .jar and the dependencies (instead of building a uber jar containing everything) then you need to make the dependencies available to Spark at runtime. 
+The following examples use the --jar option to do that. The "lib" folder contains the dependencies' jars. 
+In the case of OpenCV it's not enough to provide the .jar, as Spark will also need the native library (see above for more information).
+
+###3.2 kmeans 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
-###3.2 naive-bayes 
+###3.3 naive-bayes 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar naive-bayes -num-trials 1 -inter-trial-wait 3 -num-partitions 400 -random-seed 5 -num-examples 100000 -num-features 10000 -nb-lambda 1.0 -per-negative 0.3 -scale-factor 1.0
 
-###3.3 OpenCV check
+###3.4 OpenCV check
 
   $spark-submit --jars lib/opencv-249.jar --class "bsc.spark.image.ExampleOpenCVCheck" --driver-library-path /OPENCV_BUILD/lib/ --master local[4] target/bsc.spark-1.4.1.jar
   
-###3.4 Read images from sequence files (and OpenCV)
+###3.5 Read images from sequence files (and OpenCV)
 
   $spark-submit --jars lib/opencv-249.jar --class "bsc.spark.image.instagram.InstagramImageUtils" --driver-library-path /OPENCV_BUILD/lib/ --master local[4] target/bsc.spark-1.4.1.jar INPUTDATAPATH OUTPUTDATAPATH
 
