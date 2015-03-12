@@ -17,6 +17,7 @@
 	NOTE: Currently the code only works with OpenCV 2.4.9.
 		  Some lines of code need to be changed to be able to compile OpenCV 3.0.0.
 	      The lines are commented with "OPENCV 3.0"
+	NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how to install OpenCV
 
     Two prerequisites:
 
@@ -69,8 +70,19 @@ In the case of OpenCV it's not enough to provide the .jar, as Spark will also ne
   $spark-submit --jars lib/opencv-249.jar --class "bsc.spark.image.ExampleOpenCVCheck" --driver-library-path /OPENCV_BUILD/lib/ --master local[4] target/bsc.spark-1.4.1.jar
   
 ###3.5 Read images from sequence files (and OpenCV)
+  
+  $spark-submit --jars lib/opencv-249.jar --class "bsc.spark.image.ExampleImages2RDD" --driver-library-path /OPENCV_BUILD/lib/ --master local[4] target/bsc.spark-1.4.3.jar INPUTDATAPATH
+  
+  NOTE: Where INPUTDATAPATH has the following structure (.hsf are Hadoop sequence files):
+  NOTE: The metadata directory is not necessary for this example
+  
+  INPUTDATAPATH|
+               |-images
+			   |     |-seqfile1.hsf
+			   |     |-seqfile2.hsf 
+			   |
+			   |-metadata
+			   |     |-seqfile1.hsf
+			   |     |-seqfile2.hsf 
 
-  $spark-submit --jars lib/opencv-249.jar --class "bsc.spark.image.instagram.InstagramImageUtils" --driver-library-path /OPENCV_BUILD/lib/ --master local[4] target/bsc.spark-1.4.1.jar INPUTDATAPATH OUTPUTDATAPATH
-
-
-    
+    NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how generate sequence files of images and metadata
