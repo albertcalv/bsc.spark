@@ -9,44 +9,45 @@
 
 ####2.1.1 Spark version
 
-    IMPORTANT: bsc.spark requires Spark 1.2.0 or greater
+IMPORTANT: bsc.spark requires Spark 1.2.0 or greater
 
 ####2.1.2 OpenCV
 
-    NOTE: pom.xml has a property to select between opencv-249.jar and opencv-300.jar. 
-	NOTE: Currently the code only works with OpenCV 2.4.9.
-		  Some lines of code need to be changed to be able to compile OpenCV 3.0.0.
-	      The lines are commented with "OPENCV 3.0"
-	NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how to install OpenCV
+NOTE: pom.xml has a property to select between opencv-249.jar and opencv-300.jar. 
+NOTE: Currently the code only works with OpenCV 2.4.9.
+  Some lines of code need to be changed to be able to compile OpenCV 3.0.0.
+  The lines are commented with "OPENCV 3.0"
+NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how to install OpenCV
 
-    Two prerequisites:
+Two prerequisites:
 
-    1) opencv-249.jar (is required for compilation and has to be vailable to Spark somehow, packaged with the app's jar or through --jars) 
-        - A "Class no found..." will be raised otherwise.
-        - opencv-249.jar can be found in opencv build directory, within the "bin" folder.
-        - It must be added manually to the local Maven repo:
+1. opencv-249.jar (is required for compilation and has to be vailable to Spark somehow, packaged with the app's jar or through --jars) 
+  - A "Class no found..." will be raised otherwise.
+  - opencv-249.jar can be found in opencv build directory, within the "bin" folder.
+ - It must be added manually to the local Maven repo:
 		
           mvn install:install-file -DgroupId=opencv -DartifactId=opencv -Dpackaging=jar -Dversion=2.4.9 -Dfile=/OPENCV_BUILD/bin/opencv-249.jar
 		  		          
-    2) libopencv_java249.so has to be accesible for Spark
-        - A UnsatisfiedLinkError will be raised otherwise.
-        - The file can be found in opencv build directory, within the "lib" folder.
-        - One alternative is to copy the file within /usr/lib/ (Spark will look there)
-        - Another alternative is to use the "driver-library-path" spark-submit directive this way:
+2. libopencv_java249.so has to be accesible for Spark
+  - A UnsatisfiedLinkError will be raised otherwise.
+  - The file can be found in opencv build directory, within the "lib" folder.
+  - One alternative is to copy the file within /usr/lib/ (Spark will look there)
+  - Another alternative is to use the "driver-library-path" spark-submit directive this way:
         
-		--driver-library-path /OPENCV_BUILD/lib
-		NOTE: This also works in Windows
-		NOTE: In Windows the native library can be found in OPENCV_BUILD\build\java\x64
+  --driver-library-path /OPENCV_BUILD/lib
+  
+  NOTE: This also works in Windows
+  NOTE: In Windows the native library can be found in OPENCV_BUILD\build\java\x64
 
 ###2.3 Compilation and packaging with Maven
 
 	$mvn package
 
-	If for some reason you need to create an uber jar, an application jar including all the dependencies, it may be obtained this way:
+If for some reason you need to create an uber jar, an application jar including all the dependencies, it may be obtained this way:
 
     $mvn clean compile assembly:single
 	
-	NOTE: when using an uber jar, add or remove the "provided" directive from pom.xml to exclude or include dependencies. 		
+NOTE: when using an uber jar, add or remove the "provided" directive from pom.xml to exclude or include dependencies. 		
 
 	
 ##3. Testing
@@ -85,4 +86,4 @@ In the case of OpenCV it's not enough to provide the .jar, as Spark will also ne
 			   |     |-seqfile1.hsf
 			   |     |-seqfile2.hsf 
 
-    NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how generate sequence files of images and metadata
+NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how generate sequence files of images and metadata
