@@ -72,16 +72,16 @@ In the case of OpenCV it's not enough to provide the .jar, as Spark will also ne
   NOTE: Where INPUTDATAPATH has the following structure (.hsf are Hadoop sequence files):
   
   NOTE: The metadata directory is not necessary for this example
-  
-//  INPUTDATAPATH|
-//               |-images
-//			   |     |-seqfile1.hsf
-//			   |     |-seqfile2.hsf 
-//			   |
-//			   |-metadata
-//			   |     |-seqfile1.hsf
-//			   |     |-seqfile2.hsf 
-//
+```  
+  INPUTDATAPATH|
+               |-images
+			   |     |-seqfile1.hsf
+			   |     |-seqfile2.hsf 
+			   |
+			   |-metadata
+			   |     |-seqfile1.hsf
+			   |     |-seqfile2.hsf 
+```
 NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_opencv_install_linux.xhtml) for information on how generate sequence files of images and metadata
 
 
