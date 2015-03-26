@@ -63,7 +63,7 @@ object DataLoader {
    *         categoricalFeaturesInfo is a map of categorical feature arities, and
    *         numClasses = number of classes label can take.
    */
-  def loadLibSVMFiles(
+  private[perf] def loadLibSVMFiles(
       sc: SparkContext,
       numPartitions: Int,
       trainingDataPath: String,

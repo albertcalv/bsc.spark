@@ -9,11 +9,16 @@ import org.json4s.jackson.JsonMethods._
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
+import bsc.spark.perf.mllib.clustering.GaussianMixtureTest
+import bsc.spark.perf.mllib.feature.Word2VecTest
+import bsc.spark.perf.mllib.fpm.FPGrowthTest
+import bsc.spark.perf.mllib.linalg.BlockMatrixMultTest
+
 object TestRunner {
     def main(args: Array[String]) {
       if (args.size < 1) {
         println(
-          "mllib.perf.TestRunner requires 1 or more args, you gave %s, exiting".format(args.size))
+          "bsc.spark.perf.mllib.TestRunner requires 1 or more args, you gave %s, exiting".format(args.size))
         System.exit(1)
       }
       val testName = args(0)
@@ -41,6 +46,10 @@ object TestRunner {
         case "chi-sq-feature" => new ChiSquaredFeatureTest(sc)
         case "chi-sq-gof" => new ChiSquaredGoFTest(sc)
         case "chi-sq-mat" => new ChiSquaredMatTest(sc)
+        case "fp-growth" => new FPGrowthTest(sc)
+        case "block-matrix-mult" => new BlockMatrixMultTest(sc)
+        case "word2vec" => new Word2VecTest(sc)
+        case "gmm" => new GaussianMixtureTest(sc)
       }
       test.initialize(testName, perfTestArgs)
       // Generate a new dataset for each test

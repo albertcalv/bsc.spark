@@ -13,7 +13,7 @@ object TestRunner {
   def main(args: Array[String]) {
     if (args.size < 1) {
       println(
-        "spark.perf.TestRunner requires 1 or more args, you gave %s, exiting".format(args.size))
+        "bsc.spark.perf.spark.TestRunner requires 1 or more args, you gave %s, exiting".format(args.size))
       System.exit(1)
     }
     val testName = args(0)
