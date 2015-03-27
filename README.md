@@ -101,14 +101,14 @@ NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for
 
 ####3.3.5 spark-perf parameters
 	
-	-spark.eventLog.enabled True (DEFAULT: DISABLED!)
-	-spark.storage.memoryFraction 0.66
-	-spark.serializer org.apache.spark.serializer.JavaSerializer # or org.apache.spark.serializer.KryoSerializer
-	-spark.executor.memory 9g	
-	-spark.locality.wait" 60*1000*1000 #To ensure consistency across runs, we disable delay scheduling		
-	-num-trials 1 # How many times to run each experiment. Used to warm up system caches.
-	-inter-trial-wait 3 # Extra pause added between trials, in seconds. For runs with large amounts of shuffle data, this gives time for buffer cache write-back.	
-    - persistent-type memory # Input persistence strategy (can be "memory", "disk", or "hdfs").
+  -spark.eventLog.enabled True (DEFAULT: DISABLED!)
+  -spark.storage.memoryFraction 0.66
+  -spark.serializer org.apache.spark.serializer.JavaSerializer # or org.apache.spark.serializer.KryoSerializer
+  -spark.executor.memory 9g	
+  -spark.locality.wait" 60*1000*1000 #To ensure consistency across runs, we disable delay scheduling		
+  -num-trials 1 # How many times to run each experiment. Used to warm up system caches.
+  -inter-trial-wait 3 # Extra pause added between trials, in seconds. For runs with large amounts of shuffle data, this gives time for buffer cache write-back.	
+  - persistent-type memory # Input persistence strategy (can be "memory", "disk", or "hdfs").
 	
   
 ####3.3.1 Spark properties:
