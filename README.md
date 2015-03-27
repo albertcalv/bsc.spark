@@ -116,19 +116,19 @@ NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for
 The list of general Spark properties (not specific to this library) is available [here](http://spark.apache.org/docs/1.3.0/configuration.html) (for v1.3.0). 
 Most of the properties that control internal settings have reasonable default values. In case you need to change something there are three ways of proceeding, in order of priority:
 
-	1) Properties set directly on the SparkConf (within the application code)
-	2) Flags passed to spark-submit or spark-shell (e.g. --conf spark.shuffle.spill=false --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps")
-	3) spark-defaults.conf 
+1. Properties set directly on the SparkConf (within the application code)
+2. Flags passed to spark-submit or spark-shell (e.g. --conf spark.shuffle.spill=false --conf "spark.executor.extraJavaOptions=-XX:+PrintGCDetails -XX:+PrintGCTimeStamps")
+3. spark-defaults.conf 
 	
 When evaluating the performane of a Spark deployment the following properties may be of special interest:
 
 Application Properties:
 
-	spark.driver.maxResultSize	1g	Limit of total size of serialized results of all partitions for each Spark action (e.g. collect). Should be at least 1M, or 0 for unlimited. Jobs will be aborted if the total size is above this limit. Having a high limit may cause out-of-memory errors in driver (depends on spark.driver.memory and memory overhead of objects in JVM). Setting a proper limit can protect the driver from out-of-memory errors.
-	spark.driver.memory	512m	Amount of memory to use for the driver process, i.e. where SparkContext is initialized. (e.g. 512m, 2g). 
-	spark.executor.memory	512m	Amount of memory to use per executor process, in the same format as JVM memory strings (e.g. 512m, 2g).
-	spark.local.dir	/tmp	Directory to use for "scratch" space in Spark, including map output files and RDDs that get stored on disk. This should be on a fast, local disk in your system. It can also be a comma-separated list of multiple directories on different disks. NOTE: In Spark 1.0 and later this will be overriden by SPARK_LOCAL_DIRS (Standalone, Mesos) or LOCAL_DIRS (YARN) environment variables set by the cluster manager.
-	spark.logConf	false	Logs the effective SparkConf as INFO when a SparkContext is started.
+-spark.driver.maxResultSize	1g	Limit of total size of serialized results of all partitions for each Spark action (e.g. collect). Should be at least 1M, or 0 for unlimited. Jobs will be aborted if the total size is above this limit. Having a high limit may cause out-of-memory errors in driver (depends on spark.driver.memory and memory overhead of objects in JVM). Setting a proper limit can protect the driver from out-of-memory errors.
+-spark.driver.memory	512m	Amount of memory to use for the driver process, i.e. where SparkContext is initialized. (e.g. 512m, 2g). 
+-spark.executor.memory	512m	Amount of memory to use per executor process, in the same format as JVM memory strings (e.g. 512m, 2g).
+-spark.local.dir	/tmp	Directory to use for "scratch" space in Spark, including map output files and RDDs that get stored on disk. This should be on a fast, local disk in your system. It can also be a comma-separated list of multiple directories on different disks. NOTE: In Spark 1.0 and later this will be overriden by SPARK_LOCAL_DIRS (Standalone, Mesos) or LOCAL_DIRS (YARN) environment variables set by the cluster manager.
+-spark.logConf	false	Logs the effective SparkConf as INFO when a SparkContext is started.
 
 Shuffle Behavior
 	
