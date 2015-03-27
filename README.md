@@ -101,14 +101,14 @@ NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for
 
 ####3.3.5 spark-perf parameters
 	
-  -spark.eventLog.enabled True (DEFAULT: DISABLED!)
-  -spark.storage.memoryFraction 0.66
-  -spark.serializer org.apache.spark.serializer.JavaSerializer # or org.apache.spark.serializer.KryoSerializer
-  -spark.executor.memory 9g	
-  -spark.locality.wait" 60*1000*1000 #To ensure consistency across runs, we disable delay scheduling		
-  -num-trials 1 # How many times to run each experiment. Used to warm up system caches.
-  -inter-trial-wait 3 # Extra pause added between trials, in seconds. For runs with large amounts of shuffle data, this gives time for buffer cache write-back.	
-  - persistent-type memory # Input persistence strategy (can be "memory", "disk", or "hdfs").
+	spark.eventLog.enabled True (DEFAULT: DISABLED!)
+	spark.storage.memoryFraction 0.66
+	spark.serializer org.apache.spark.serializer.JavaSerializer # or org.apache.spark.serializer.KryoSerializer
+	spark.executor.memory 9g	
+	spark.locality.wait" 60*1000*1000 #To ensure consistency across runs, we disable delay scheduling		
+	num-trials 1 # How many times to run each experiment. Used to warm up system caches.
+	inter-trial-wait 3 # Extra pause added between trials, in seconds. For runs with large amounts of shuffle data, this gives time for buffer cache write-back.	
+	persistent-type memory # Input persistence strategy (can be "memory", "disk", or "hdfs").
 	
   
 ####3.3.1 Spark properties:
@@ -124,11 +124,11 @@ When evaluating the performane of a Spark deployment the following properties ma
 
 Application Properties:
 
--spark.driver.maxResultSize	1g	Limit of total size of serialized results of all partitions for each Spark action (e.g. collect). Should be at least 1M, or 0 for unlimited. Jobs will be aborted if the total size is above this limit. Having a high limit may cause out-of-memory errors in driver (depends on spark.driver.memory and memory overhead of objects in JVM). Setting a proper limit can protect the driver from out-of-memory errors.
--spark.driver.memory	512m	Amount of memory to use for the driver process, i.e. where SparkContext is initialized. (e.g. 512m, 2g). 
--spark.executor.memory	512m	Amount of memory to use per executor process, in the same format as JVM memory strings (e.g. 512m, 2g).
--spark.local.dir	/tmp	Directory to use for "scratch" space in Spark, including map output files and RDDs that get stored on disk. This should be on a fast, local disk in your system. It can also be a comma-separated list of multiple directories on different disks. NOTE: In Spark 1.0 and later this will be overriden by SPARK_LOCAL_DIRS (Standalone, Mesos) or LOCAL_DIRS (YARN) environment variables set by the cluster manager.
--spark.logConf	false	Logs the effective SparkConf as INFO when a SparkContext is started.
+	spark.driver.maxResultSize 1g #Limit of total size of serialized results of all partitions for each Spark action (e.g. collect). Should be at least 1M, or 0 for unlimited. Jobs will be aborted if the total size is above this limit. Having a high limit may cause out-of-memory errors in driver (depends on spark.driver.memory and memory overhead of objects in JVM). Setting a proper limit can protect the driver from out-of-memory errors.
+	spark.driver.memory 512m #Amount of memory to use for the driver process, i.e. where SparkContext is initialized. (e.g. 512m, 2g). 
+	spark.executor.memory	512m	Amount of memory to use per executor process, in the same format as JVM memory strings (e.g. 512m, 2g).
+	spark.local.dir	/tmp	Directory to use for "scratch" space in Spark, including map output files and RDDs that get stored on disk. This should be on a fast, local disk in your system. It can also be a comma-separated list of multiple directories on different disks. NOTE: In Spark 1.0 and later this will be overriden by SPARK_LOCAL_DIRS (Standalone, Mesos) or LOCAL_DIRS (YARN) environment variables set by the cluster manager.
+	spark.logConf	false	Logs the effective SparkConf as INFO when a SparkContext is started.
 
 Shuffle Behavior
 	
