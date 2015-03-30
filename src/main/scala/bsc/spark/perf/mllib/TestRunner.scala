@@ -34,6 +34,8 @@ object TestRunner {
         case "als" => new ALSTest(sc)
         // clustering
         case "kmeans" => new KMeansTest(sc)
+        case "kmeans-gen" => new KMeansGenToDisk(sc)
+        case "kmeans-disk" => new KMeansTestFromDisk(sc)
         // trees
         case "decision-tree" => new DecisionTreeTest(sc)
         // linalg

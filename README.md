@@ -95,6 +95,15 @@ NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
+Generating kmeans data to disk:
+
+  $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans-gen -path /gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
+
+Executing kmeans over disk data:
+
+ $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --jars bsc.spark.1.4.3/lib/jopt-simple-4.9-beta-1.jar --master local[4] bsc.spark-1.4.4.jar kmeans-disk -path /gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
+
+
 ####3.3.3 naive-bayes 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar naive-bayes -num-trials 1 -inter-trial-wait 3 -num-partitions 400 -random-seed 5 -num-examples 100000 -num-features 10000 -nb-lambda 1.0 -per-negative 0.3 -scale-factor 1.0
