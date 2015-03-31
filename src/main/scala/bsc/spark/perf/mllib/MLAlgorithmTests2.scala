@@ -66,17 +66,12 @@ abstract class ClusteringTestsGenToDisk(sc: SparkContext) extends PerfTest {
     val data = DataGenerator.generateKMeansVectors(sc, math.ceil(numPoints*1.25).toLong, numColumns,
       numCenters, numPartitions, seed)
 
-    val split = data.randomSplit(Array(0.8, 0.2), seed)
-
-    rdd = split(0).cache()
-    testRdd = split(1)
-    
     //RUBEN
     println("SAVING DATA TO DISK...")
-    val rddStrings = rdd.map(v => v.toArray.mkString(" "))
-    rddStrings.saveAsTextFile(path)
-    println("DATA SAVED...")
-    //RUBEN    
+    val dataStrings = data.map(v => v.toArray.mkString(" "))
+    dataStrings.saveAsTextFile(path)
+    println("DATA SAVED.")
+    //RUBEN            
   }  
 
   override def run(): JValue = {
@@ -137,15 +132,15 @@ abstract class ClusteringTestsFromDisk(sc: SparkContext) extends PerfTest {
   }
 
   override def createInputData(seed: Long) = {
-    val numPartitions: Int = intOptionValue(NUM_PARTITIONS)
-
-    val numPoints: Long = longOptionValue(NUM_POINTS)
-    val numColumns: Int = intOptionValue(NUM_COLUMNS)
-    val numCenters: Int = intOptionValue(NUM_CENTERS)
-    val path: String = stringOptionValue(PATH)
-
-    val data = DataGenerator.generateKMeansVectors(sc, math.ceil(numPoints*1.25).toLong, numColumns,
-      numCenters, numPartitions, seed)
+	val path: String = stringOptionValue(PATH)
+	
+    //RUBEN
+    println("LOADING DATA FROM DISK...")
+    //println(bsc.spark.Loader.hdfsURI("/etc/hadoop/conf"))
+    val dataLines = sc.textFile(path+"/*")
+    val data = dataLines.map(s => Vectors.dense(s.split(' ').map(_.toDouble)))
+    println("DATA LOADED.")    
+    //RUBEN
 
     val split = data.randomSplit(Array(0.8, 0.2), seed)
 
@@ -155,12 +150,7 @@ abstract class ClusteringTestsFromDisk(sc: SparkContext) extends PerfTest {
     // Materialize rdd
     println("Num Examples: " + rdd.count())       
 
-    //RUBEN
-    println("LOADING DATA TO RDD...")
-    val dataLines = sc.textFile(path+"/*")
-    rdd = dataLines.map(s => Vectors.dense(s.split(' ').map(_.toDouble)))
-    println("DATA LOADED:"+ rdd.count())    
-    //RUBEN
+    
   }  
 
   override def run(): JValue = {
