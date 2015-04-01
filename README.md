@@ -91,17 +91,25 @@ NOTE: See [this](http://personals.ac.upc.edu/rtous/howto_spark_opencv.xhtml) for
 
  spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.spark.TestRunner" --master local[4] target/bsc.spark-1.4.3.jar sort-by-key -num-trials 1 -inter-trial-wait 5 -random-seed 5 -num-partitions 400 -reduce-tasks 400 -num-records 2000000 -unique-keys 200 -key-length 10 -unique-values 10000 -value-length 10 -persistent-type memory -storage-location "" 
 
+Generating data to disk (kvgen):
+
+ spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.spark.TestRunner" --master local[4] target/bsc.spark-1.4.3.jar kvgen -num-trials 1 -inter-trial-wait 5 -random-seed 5 -num-partitions 400 -reduce-tasks 400 -num-records 2000000 -unique-keys 200 -key-length 10 -unique-values 10000 -value-length 10 -persistent-type memory -storage-location "" -path file:///gpfs/projects/bsc31/bsc31886/data
+
+Executing over disk data:
+
+ spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.spark.TestRunner" --master local[4] target/bsc.spark-1.4.3.jar sort-by-key-disk -num-trials 1 -inter-trial-wait 5 -random-seed 5 -num-partitions 400 -reduce-tasks 400 -num-records 2000000 -unique-keys 200 -key-length 10 -unique-values 10000 -value-length 10 -persistent-type memory -storage-location "" -path file:///gpfs/projects/bsc31/bsc31886/data
+
 ####3.3.2 kmeans 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
 Generating kmeans data to disk:
 
-  $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans-gen -path /gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
+  $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans-gen -path file:///gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
 Executing kmeans over disk data:
 
- $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --jars bsc.spark.1.4.3/lib/jopt-simple-4.9-beta-1.jar --master local[4] bsc.spark-1.4.4.jar kmeans-disk -path /gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
+ $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --jars bsc.spark.1.4.3/lib/jopt-simple-4.9-beta-1.jar --master local[4] bsc.spark-1.4.4.jar kmeans-disk -path file:///gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
 
 ####3.3.3 naive-bayes 
@@ -232,9 +240,13 @@ Scheduling
 	spark.task.cpus	1	Number of cores to allocate for each task.
 	spark.task.maxFailures	4	Number of individual task failures before giving up on the job. Should be greater than or equal to 1. Number of allowed retries = this value - 1.	
 	
-			
-	
+#4. SPARK4MN
 
+##4.1 Disk access
+			
+ -NOTE: It's recommended to use 'file://' before conventional paths because if HDFS is enabled Spark may take all paths (e.g. /data) as HDFS paths.
+ 
+##4.2 Disk access
 
 	
 	
