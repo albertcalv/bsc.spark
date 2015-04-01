@@ -18,19 +18,26 @@ object TestRunner {
     }
     val testName = args(0)
     val perfTestArgs = args.slice(1, args.length)
-    val sc = new SparkContext(new SparkConf().setAppName("TestRunner: " + testName))
-
+	
+	val conf = new SparkConf()             
+             .setAppName("TestRunner: " + testName)
+             .set("spark.task.maxFailures", "4")
+			 
+    val sc = new SparkContext(conf)	
+		
     val test: PerfTest = testName match {
+	  case "kvgen" => new GenKeyToDisk(sc)
       case "aggregate-by-key" => new AggregateByKey(sc)
       case "aggregate-by-key-int" => new AggregateByKeyInt(sc)
       case "aggregate-by-key-naive" => new AggregateByKeyNaive(sc)
       case "sort-by-key" => new SortByKey(sc)
+	  case "sort-by-key-disk" => new SortByKeyDisk(sc)
       case "sort-by-key-int" => new SortByKeyInt(sc)
       case "count" => new Count(sc)
       case "count-with-filter" => new CountWithFilter(sc)
       case "scheduling-throughput" => new SchedulerThroughputTest(sc)
     }
-    test.initialize(perfTestArgs)
+    test.initialize(perfTestArgs) //RUBEN: This method creates an optionSet object with the values of the arguments. It will be used by createInputData and run 
     test.createInputData()
     val (testOptions: JValue, results: Seq[JValue]) = test.run()
 

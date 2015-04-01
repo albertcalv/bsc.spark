@@ -23,7 +23,12 @@ object TestRunner {
       }
       val testName = args(0)
       val perfTestArgs = args.slice(1, args.length)
-      val sc = new SparkContext(new SparkConf().setAppName("TestRunner: " + testName))
+	  
+      val conf = new SparkConf()             
+             .setAppName("TestRunner: " + testName)
+             .set("spark.task.maxFailures", "4")
+			 
+	 val sc = new SparkContext(conf)	
 
       // Unfortunate copy of code because there are Perf Tests in both projects and the compiler doesn't like it
       val test: PerfTest = testName match {
