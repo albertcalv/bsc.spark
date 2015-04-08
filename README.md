@@ -1,4 +1,4 @@
-# bsc.spark
+# bsc.spark (version 1.4.5)
 
 ##1. Introduction
 [TODO]
@@ -99,7 +99,13 @@ Executing over disk data:
 
  spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.spark.TestRunner" --master local[4] target/bsc.spark-1.4.3.jar sort-by-key-disk -num-trials 1 -inter-trial-wait 5 -random-seed 5 -num-partitions 400 -reduce-tasks 400 -num-records 2000000 -unique-keys 200 -key-length 10 -unique-values 10000 -value-length 10 -persistent-type memory -storage-location "" -path file:///gpfs/projects/bsc31/bsc31886/data
 
-####3.3.2 kmeans 
+
+####3.3.2 shuffling test
+
+spark-submit --jars bsc.spark.1.4.3/lib/guava-18.0.jar --class "bsc.spark.examples.terasort.rxin.TeraGenAndShuffle" --master local[4] bsc.spark-1.4.4.jar 1g 100 100
+
+
+####3.3.3 kmeans 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar kmeans -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
@@ -112,7 +118,7 @@ Executing kmeans over disk data:
  $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --jars bsc.spark.1.4.3/lib/jopt-simple-4.9-beta-1.jar --master local[4] bsc.spark-1.4.4.jar kmeans-disk -path file:///gpfs/projects/bsc31/bsc31886/data -num-centers 5 -num-iterations 10 -num-partitions 10 -num-points 1000 -num-trials 1 -random-seed 5 -num-columns 100 -inter-trial-wait 3
 
 
-####3.3.3 naive-bayes 
+####3.3.4 naive-bayes 
 
   $spark-submit --jars lib/jopt-simple-4.9-beta-1.jar --class "bsc.spark.perf.mllib.TestRunner" --master local[4] target/bsc.spark-1.4.1.jar naive-bayes -num-trials 1 -inter-trial-wait 3 -num-partitions 400 -random-seed 5 -num-examples 100000 -num-features 10000 -nb-lambda 1.0 -per-negative 0.3 -scale-factor 1.0
 
