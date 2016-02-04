@@ -23,20 +23,24 @@ object TestRunner {
       }
       val testName = args(0)
       val perfTestArgs = args.slice(1, args.length)
-	  
-      val conf = new SparkConf()             
+
+      val conf = new SparkConf()
              .setAppName("TestRunner: " + testName)
              .set("spark.task.maxFailures", "4")
-			 
-	 val sc = new SparkContext(conf)	
+
+	 val sc = new SparkContext(conf)
 
       // Unfortunate copy of code because there are Perf Tests in both projects and the compiler doesn't like it
       val test: PerfTest = testName match {
         case "glm-regression" => new GLMRegressionTest(sc)
         case "glm-classification" => new GLMClassificationTest(sc)
-        case "naive-bayes" => new NaiveBayesTest(sc)
         // recommendation
         case "als" => new ALSTest(sc)
+        // classification
+        case "naive-bayes" => new NaiveBayesTest(sc)
+        case "naive-bayes-gen" => new NaiveBayesGenToDisk(sc)
+        case "naive-bayes-disk" => new NaiveBayesTestFromDisk(sc)
+
         // clustering
         case "kmeans" => new KMeansTest(sc)
         case "kmeans-gen" => new KMeansGenToDisk(sc)
